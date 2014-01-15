@@ -1,4 +1,4 @@
-package tp1;
+package bubble;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -7,23 +7,25 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class main {
-
-	public static void main(String[] args) {
+public class main
+{
+	
+	public static void main(String[] args)
+	{
 		
 		String path = "";
 		boolean printResult = false;
 		
 		// Analyse des arguments de la fonction
-		for(int i = 0; i < args.length; i++) 
+		for (int i = 0; i < args.length; i++)
 		{
 			// -f décris l'emplacement du fichier
-			if(args[i].equals("-f")) 
+			if (args[i].equals("-f"))
 			{
-				 path = args[++i];
-			} 
+				path = args[++i];
+			}
 			// -p détermine si on affiche le résultat a la fin ou non
-			else if (args[i].equals("-p")) 
+			else if (args[i].equals("-p"))
 			{
 				printResult = true;
 			}
@@ -36,21 +38,23 @@ public class main {
 		
 		// Lecture du fichier et transfer dans un tableau de valeurs
 		ArrayList<Integer> values = new ArrayList<>();
-		try 
+		try
 		{
 			FileInputStream fileInp = new FileInputStream(path);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(fileInp));
 			String currentLine = "";
-			while((currentLine = reader.readLine()) != null)
+			while ((currentLine = reader.readLine()) != null)
 			{
 				values.add(Integer.parseInt(currentLine));
 			}
-		} 
-		catch (FileNotFoundException e) 
+		}
+		catch (FileNotFoundException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -59,9 +63,9 @@ public class main {
 		Bubble bubbleSort = new Bubble();
 		ArrayList<Integer> result = bubbleSort.sort(values);
 		
-		if(printResult)
+		if (printResult)
 		{
-			for(int i = 0; i < result.size(); i++)
+			for (int i = 0; i < result.size(); i++)
 			{
 				System.out.println(result.get(i));
 			}
