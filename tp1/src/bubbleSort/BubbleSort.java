@@ -1,4 +1,4 @@
-package bubble;
+package bubbleSort;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -6,11 +6,11 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Bubble
+public class BubbleSort
 {
 	public static void main(String[] args)
 	{
-		Bubble bubbleSort = new Bubble();
+		BubbleSort bubbleSort = new BubbleSort();
 		String path = "";
 		boolean printResult = false;
 		
@@ -22,7 +22,7 @@ public class Bubble
 			{
 				path = args[++i];
 			}
-			// -p détermine si on affiche le résultat a la fin de l'exécution du programme
+			// -p détermine si on affiche le résultat à la fin de l'exécution du programme
 			else if (args[i].equals("-p"))
 			{
 				printResult = true;
@@ -89,8 +89,8 @@ public class Bubble
 	/**
 	 * Selon le pseudo code trouvé sur http://en.wikipedia.org/wiki/Bubble_sort
 	 * 
-	 * @param values Contains the array to sort
-	 * @return The sorted array
+	 * @param values contains the array to sort
+	 * @return the sorted array
 	 */
 	private ArrayList<Integer> sort(ArrayList<Integer> values)
 	{
