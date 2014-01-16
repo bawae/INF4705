@@ -10,7 +10,7 @@ public class Bubble
 {
 	public static void main(String[] args)
 	{
-		
+		Bubble bubbleSort = new Bubble();
 		String path = "";
 		boolean printResult = false;
 		
@@ -36,11 +36,14 @@ public class Bubble
 		
 		// Lecture du fichier et transfer dans un tableau de valeurs
 		ArrayList<Integer> values;
-		values = lireFichier(path);
+		values = bubbleSort.lireFichier(path);
+		
+		long timeStart = System.nanoTime();
 		
 		// Appel de l'algorithme de tri à bulle
-		Bubble bubbleSort = new Bubble();
 		ArrayList<Integer> result = bubbleSort.sort(values);
+		
+		long timeElapsed = Math.abs(timeStart - System.nanoTime());
 		
 		if (printResult)
 		{
@@ -49,6 +52,8 @@ public class Bubble
 				System.out.println(result.get(i));
 			}
 		}
+		
+		System.out.println("\n\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
 	}
 	
 	/**
@@ -57,18 +62,17 @@ public class Bubble
 	 * @param path where the file exists
 	 * @return ArrayList containing all the values in the order read
 	 */
-	private static ArrayList<Integer> lireFichier(String path)
+	private ArrayList<Integer> lireFichier(String path)
 	{
 		ArrayList<Integer> values = new ArrayList<>();
 		
 		try
 		{
 			Scanner s = new Scanner(new BufferedReader(new FileReader(path)));
-			String currentLine = "";
 			
-			while ((currentLine = s.next()) != null)
+			while (s.hasNext())
 			{
-				values.add(Integer.parseInt(currentLine));
+				values.add(Integer.parseInt(s.next()));
 			}
 			
 			s.close();
