@@ -53,7 +53,7 @@ public class Bubble
 			}
 		}
 		
-		System.out.println("\n\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
+		System.out.println("\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
 	}
 	
 	/**
