@@ -10,7 +10,6 @@ public class CountingSort
 {
 	public static void main(String[] args)
 	{
-		CountingSort countingSort = new CountingSort();
 		String path = "";
 		boolean printResult = false;
 		
@@ -34,7 +33,7 @@ public class CountingSort
 			}
 		}
 		
-		ArrayList<Integer> values = countingSort.lireFichier(path);
+		ArrayList<Integer> values = lireFichier(path);
 		
 		int min = values.get(0),
 				max = values.get(0),
@@ -53,7 +52,7 @@ public class CountingSort
 		long timeStart = System.nanoTime();
 		
 		// Appel de l'algorithme de tri de comptage
-		ArrayList<Integer> result = countingSort.sort(values, min, max);
+		ArrayList<Integer> result = sort(values, min, max);
 		
 		long timeElapsed = Math.abs(timeStart - System.nanoTime());
 		
@@ -74,7 +73,7 @@ public class CountingSort
 	 * @param path where the file exists
 	 * @return ArrayList containing all the values in the order read
 	 */
-	private ArrayList<Integer> lireFichier(String path)
+	private static ArrayList<Integer> lireFichier(String path)
 	{
 		ArrayList<Integer> values = new ArrayList<>();
 		
@@ -106,7 +105,7 @@ public class CountingSort
 	 * @param max contains the maximum value contained in the array
 	 * @return sorted ArrayList
 	 */
-	public ArrayList<Integer> sort(ArrayList<Integer> values, int min, int max)
+	public static ArrayList<Integer> sort(ArrayList<Integer> values, int min, int max)
 	{
 		// Initialisation des variables
 		int countingTabSize = (max - min) + 1;

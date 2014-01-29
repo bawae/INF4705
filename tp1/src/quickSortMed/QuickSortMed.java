@@ -1,4 +1,4 @@
-package bubbleSort;
+package quickSortMed;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -6,7 +6,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class BubbleSort
+import quickSortMed.QuickSortMed;
+
+public class QuickSortMed
 {
 	public static void main(String[] args)
 	{
@@ -40,7 +42,7 @@ public class BubbleSort
 		long timeStart = System.nanoTime();
 		
 		// Appel de l'algorithme de tri � bulle
-		ArrayList<Integer> result = sort(values);
+		ArrayList<Integer> result = sort(values, 0, values.size() - 1);
 		
 		long timeElapsed = Math.abs(timeStart - System.nanoTime());
 		
@@ -86,34 +88,56 @@ public class BubbleSort
 	}
 	
 	/**
-	 * Selon le pseudo code trouv� sur http://en.wikipedia.org/wiki/Bubble_sort
+	 * Selon le pseudo code trouvé sur http://fr.wikipedia.org/wiki/Tri_rapide
 	 * 
-	 * @param values contains the array to sort
-	 * @return the sorted array
+	 * @param values contains all the values to sort
+	 * @param first contains the index of the first value contained in the array
+	 * @param last contains the index of the last value contained in the array
+	 * @return sorted ArrayList
 	 */
-	public static ArrayList<Integer> sort(ArrayList<Integer> values)
+	public static ArrayList<Integer> sort(ArrayList<Integer> values, int first, int last)
 	{
-		// D�termine si un interchangement a eu lieu dans la derni�re it�ration
-		boolean swapped = false;
-		int temp;
-		
-		do
+		if(first < last)
 		{
-			swapped = false;
-			for (int i = 1; i < values.size(); i++)
-			{
-				// Si la paire n'est pas ordonn�e
-				if (values.get(i - 1) > values.get(i))
-				{
-					// On interchange les valeurs
-					temp = values.get(i);
-					values.set(i, values.get(i - 1));
-					values.set(i - 1, temp);
-					swapped = true;
-				}
-			}
-		} while (swapped);
-		
+			int med = (last - first) / 2;
+
+			int pivot;
+			
+			if ( (values.get(med) - values.get(first)) * (values.get(last) - values.get(med)) >= 0 ) // a >= b and a <= c OR a <= b and a >= c
+		        pivot = med;
+		    else if ( (values.get(first) - values.get(med)) * (values.get(last) - values.get(first)) >= 0 ) // b >= a and b <= c OR b <= a and b >= c
+		        pivot = first;
+		    else
+		        pivot = last;
+			
+			//System.out.println("First value: " + values.get(first) + " Med value: " + values.get(med) + " Last value: " + values.get(last) + " Pivot : " + values.get(pivot));
+			
+			pivot = partition(values, first, last, pivot);
+			sort(values, first, pivot-1);
+			sort(values, pivot+1, last);
+		}
 		return values;
+	}
+	
+	private static int partition(ArrayList<Integer> values, int first, int last, int pivot)
+	{
+		Integer temp = values.get(last);
+		values.set(last, values.get(pivot));
+		values.set(pivot, temp);
+		
+		int j = first;
+		for(int i = first; i < last; i++)
+		{
+			if(values.get(i) <= values.get(last))
+			{
+				temp = values.get(i);
+				values.set(i, values.get(j));
+				values.set(j++, temp);
+			}
+		}
+		temp = values.get(j);
+		values.set(j, values.get(last));
+		values.set(last, temp);
+		return j;
 	}
 }
