@@ -10,10 +10,10 @@ echo "Nom du fichier,bubble,counting,quick,quickMed,quickSeuil,quickMedSeuil \n"
 
 for f in $TEST_FILES
 do
-	echo "$f,"
+	echo "$f," > $FILE_LOCATION/$FILE_NAME
 	for a in $SORT_ARRAY
 	do
 		java -jar $a "-f $f" > $FILE_LOCATION/$FILE_NAME
 	done
-	echo "\n"
+	echo "\n" > $FILE_LOCATION/$FILE_NAME
 done
