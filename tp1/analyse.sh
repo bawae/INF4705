@@ -13,7 +13,7 @@ do
 	echo $f"," >> $FILE_LOCATION/$FILE_NAME
 	for ((j=0;j<SORT_ARRAY_ELEMENTS;j++));
 	do
-		java -jar $SORT_ARRAY[j].jar $f >> $FILE_LOCATION/$FILE_NAME
+		java -jar ${SORT_ARRAY[j]}.jar $f >> $FILE_LOCATION/$FILE_NAME
 	done
 	echo "\n" >> $FILE_LOCATION/$FILE_NAME
 done
