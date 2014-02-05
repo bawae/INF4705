@@ -3,7 +3,7 @@ FILE_NAME='seuil.csv'
 FILE_LOCATION='logs'
 TEST_FILES_LOCATION='tp1-H10-donnees'
 TEST_FILE_ARRAY=(1000 5000 10000 50000 100000)
-SORT_ARRAY=('quickSeuil' 'quickMedSeuil')
+SORT_ARRAY=(quickSeuil quickMedSeuil)
 
 # Déclarer les colonnes du tableau
 echo -e "Nom du fichier,Algorithme,Seuil,Temps d'execution" > $FILE_LOCATION/$FILE_NAME
