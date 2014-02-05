@@ -52,7 +52,10 @@ public class BubbleSort
 			}
 		}
 		
-		System.out.println("\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
+		if(printResult)
+			System.out.println("\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
+		else
+			System.out.println(timeElapsed);
 	}
 	
 	/**
