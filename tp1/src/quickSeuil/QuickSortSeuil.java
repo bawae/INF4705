@@ -110,9 +110,11 @@ public class QuickSortSeuil
 		if(first < last && last - first > SEUIL)
 		{
 			int pivot = first;
-			pivot = partition(values, first, last, pivot);
-			sort(values, first, pivot-1);
-			sort(values, pivot+1, last);
+			pivot = partition(values, first, last);
+			if (first < pivot - 1)
+				sort(values, first, pivot-1);
+			if (pivot < last)
+				sort(values, pivot+1, last);
 		}
 		else
 		{
@@ -121,25 +123,28 @@ public class QuickSortSeuil
 		return values;
 	}
 	
-	private static int partition(ArrayList<Integer> values, int first, int last, int pivot)
+	private static int partition(ArrayList<Integer> values, int left, int right)
 	{
-		Integer temp = values.get(last);
-		values.set(last, values.get(pivot));
-		values.set(pivot, temp);
-		
-		int j = first;
-		for(int i = first; i < last; i++)
+		int i = left, j = right;
+		int tmp;
+		int pivot = values.get((left + right) / 2);
+
+		while (i <= j)
 		{
-			if(values.get(i) <= values.get(last))
+			while (values.get(i) < pivot)
+				i++;
+			while (values.get(j) > pivot)
+				j--;
+			if (i <= j)
 			{
-				temp = values.get(i);
+				tmp = values.get(i);
 				values.set(i, values.get(j));
-				values.set(j++, temp);
+				values.set(j, tmp);
+				i++;
+				j--;
 			}
 		}
-		temp = values.get(j);
-		values.set(j, values.get(last));
-		values.set(last, temp);
-		return j;
+
+		return i;
 	}
 }
