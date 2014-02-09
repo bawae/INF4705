@@ -114,7 +114,7 @@ public class QuickSort {
 	{
 		int i = left, j = right;
 		int tmp;
-		int pivot = values.get((left + right) / 2);
+		int pivot = values.get(left);
 
 		while (i <= j)
 		{

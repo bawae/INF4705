@@ -11,7 +11,7 @@ import bubbleSort.BubbleSort;
 
 public class QuickSortMedSeuil
 {
-	private static int SEUIL = 5;
+	private static int SEUIL = 1;
 	
 	public static void main(String[] args)
 	{
@@ -107,56 +107,74 @@ public class QuickSortMedSeuil
 	 */
 	public static ArrayList<Integer> sort(ArrayList<Integer> values, int first, int last)
 	{
-		if(first < last && last - first > SEUIL)
+		if(first < last)
 		{
-			int med = (last - first) / 2;
-
-			int pivot;
-			
-			if ( (values.get(med) - values.get(first)) * (values.get(last) - values.get(med)) >= 0 ) // a >= b and a <= c OR a <= b and a >= c
-		        pivot = med;
-		    else if ( (values.get(first) - values.get(med)) * (values.get(last) - values.get(first)) >= 0 ) // b >= a and b <= c OR b <= a and b >= c
-		        pivot = first;
-		    else
-		        pivot = last;
-			
-			//System.out.println("First value: " + values.get(first) + " Med value: " + values.get(med) + " Last value: " + values.get(last) + " Pivot : " + values.get(pivot));
-			
-			pivot = partition(values, first, last);
-			if (first < pivot - 1)
-				sort(values, first, pivot-1);
-			if (pivot < last)
-				sort(values, pivot+1, last);
-		}
-		else
-		{
-			BubbleSort.sort(values);
+			if(first + SEUIL < last)
+			{
+				//System.out.println("First value: " + values.get(first) + " Med value: " + values.get(med) + " Last value: " + values.get(last) + " Pivot : " + values.get(pivot));
+				
+				int partition = partition(values, first, last);
+				if (first < partition - 1)
+					sort(values, first, partition - 1);
+				if (partition < last)
+					sort(values, partition + 1, last);
+			}	
+			else
+			{
+				BubbleSort.sort(values);
+			}
 		}
 		return values;
 	}
 	
 	private static int partition(ArrayList<Integer> values, int left, int right)
 	{
-		int i = left, j = right;
-		int tmp;
-		int pivot = values.get((left + right) / 2);
+		int i = left,
+				j = right - 1;
+		int pivot = medianOf3(values, left, right);
 
 		while (i <= j)
 		{
 			while (values.get(i) < pivot)
 				i++;
+			
 			while (values.get(j) > pivot)
 				j--;
+			
 			if (i <= j)
 			{
-				tmp = values.get(i);
-				values.set(i, values.get(j));
-				values.set(j, tmp);
+				swap(values, i, j);
 				i++;
 				j--;
 			}
 		}
+		
+		swap(values, i, right - 1);
 
 		return i;
+	}
+	
+	private static int medianOf3(ArrayList<Integer> data, int left, int right)
+	{
+	    int center = (left + right) / 2;
+	    // order left & center
+	    if (data.get(left) > data.get(center))
+	      swap(data, left, center);
+	    // order left & right
+	    if (data.get(left) > data.get(right))
+	      swap(data, left, right);
+	    // order center & right
+	    if (data.get(center) > data.get(right))
+	      swap(data, center, right);
+
+	    swap(data, center, right - 1); // put pivot on right
+	    return data.get(right - 1); // return median value
+	}
+	
+	private static void swap(ArrayList<Integer> data, int dex1, int dex2)
+	{
+		int temp = data.get(dex1);
+	    data.set(dex1, data.get(dex2));
+	    data.set(dex2, temp);
 	}
 }

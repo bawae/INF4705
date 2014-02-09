@@ -10159,7 +10159,8 @@ testset_50000_20.txt,quickSeuil,23,9186420065
 testset_50000_20.txt,quickMedSeuil,23,8461580152
 testset_50000_20.txt,quickSeuil,24,8373090741
 testset_50000_20.txt,quickMedSeuil,24,9054854963
-testset_50000_20.txt,quickSeuil,25,testset_50000_20.txt,quickMedSeuil,25,8997004535
+testset_50000_20.txt,quickSeuil,25,8853582190
+testset_50000_20.txt,quickMedSeuil,25,8997004535
 testset_50000_20.txt,quickSeuil,26,9006524812
 testset_50000_20.txt,quickMedSeuil,26,8340505725
 testset_50000_20.txt,quickSeuil,27,8297794120

@@ -97,7 +97,7 @@ public class BubbleSort
 	public static ArrayList<Integer> sort(ArrayList<Integer> values)
 	{
 		// D�termine si un interchangement a eu lieu dans la derni�re it�ration
-		boolean swapped = false;
+		boolean swapped;
 		int temp;
 		
 		do

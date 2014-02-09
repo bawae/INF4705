@@ -11,7 +11,7 @@ import bubbleSort.BubbleSort;
 public class QuickSortSeuil 
 {
 	
-	private static int SEUIL = 5;
+	private static int SEUIL = 1;
 	
 	public static void main(String[] args)
 	{
@@ -107,18 +107,21 @@ public class QuickSortSeuil
 	 */
 	public static ArrayList<Integer> sort(ArrayList<Integer> values, int first, int last)
 	{
-		if(first < last && last - first > SEUIL)
+		if(first < last)
 		{
-			int pivot = first;
-			pivot = partition(values, first, last);
-			if (first < pivot - 1)
-				sort(values, first, pivot-1);
-			if (pivot < last)
-				sort(values, pivot+1, last);
-		}
-		else
-		{
-			BubbleSort.sort(values);
+			if(first + SEUIL < last)
+			{
+				int pivot = first;
+				pivot = partition(values, first, last);
+				if (first < pivot - 1)
+					sort(values, first, pivot-1);
+				if (pivot < last)
+					sort(values, pivot+1, last);
+			}
+			else
+			{
+				BubbleSort.sort(values);
+			}
 		}
 		return values;
 	}
@@ -127,7 +130,7 @@ public class QuickSortSeuil
 	{
 		int i = left, j = right;
 		int tmp;
-		int pivot = values.get((left + right) / 2);
+		int pivot = values.get(left);
 
 		while (i <= j)
 		{
