@@ -12211,7 +12211,8 @@ testset_100000_12.txt,quickMedSeuil,37,33744984264
 testset_100000_12.txt,quickSeuil,38,33853790148
 testset_100000_12.txt,quickMedSeuil,38,33772389247
 testset_100000_12.txt,quickSeuil,39,34172676375
-testset_100000_12.txt,quickMedSeuil,39,testset_100000_12.txt,quickSeuil,40,33710172020
+testset_100000_12.txt,quickMedSeuil,39,34034264747
+testset_100000_12.txt,quickSeuil,40,33710172020
 testset_100000_12.txt,quickMedSeuil,40,34730357504
 testset_100000_12.txt,quickSeuil,41,33650283578
 testset_100000_12.txt,quickMedSeuil,41,33621773965
