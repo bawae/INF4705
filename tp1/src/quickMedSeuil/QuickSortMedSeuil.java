@@ -121,7 +121,7 @@ public class QuickSortMedSeuil
 			}	
 			else
 			{
-				BubbleSort.sort(values);
+				BubbleSort.sort(values, first, last+1);
 			}
 		}
 		return values;

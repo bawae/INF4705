@@ -40,7 +40,7 @@ public class BubbleSort
 		long timeStart = System.nanoTime();
 		
 		// Appel de l'algorithme de tri � bulle
-		ArrayList<Integer> result = sort(values);
+		ArrayList<Integer> result = sort(values, 0, values.size());
 		
 		long timeElapsed = Math.abs(timeStart - System.nanoTime());
 		
@@ -94,7 +94,7 @@ public class BubbleSort
 	 * @param values contains the array to sort
 	 * @return the sorted array
 	 */
-	public static ArrayList<Integer> sort(ArrayList<Integer> values)
+	public static ArrayList<Integer> sort(ArrayList<Integer> values, int start, int size)
 	{
 		// D�termine si un interchangement a eu lieu dans la derni�re it�ration
 		boolean swapped;
@@ -103,7 +103,7 @@ public class BubbleSort
 		do
 		{
 			swapped = false;
-			for (int i = 1; i < values.size(); i++)
+			for (int i = start+1; i < size; i++)
 			{
 				// Si la paire n'est pas ordonn�e
 				if (values.get(i - 1) > values.get(i))
