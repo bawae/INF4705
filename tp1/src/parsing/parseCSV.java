@@ -34,7 +34,7 @@ public class parseCSV
 			{
 				for(String so : sort)
 				{
-					for(int seuil = 5; seuil < 50; seuil++)
+					for(int seuil = 5; seuil <= 100; seuil++)
 					{
 						moyenne = 0;
 						compteur = 0;

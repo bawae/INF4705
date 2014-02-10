@@ -14,14 +14,14 @@ do
 	do
 		TEST_FILE_NAME="testset_"$f"_"$j".txt"
 
-		for((i=5; i <= 50; i++))
+		for((i=5; i <= 100; i++))
 		do
 	#		SORT_ARGS="-f ""$TEST_FILES_LOCATION""/""$TEST_FILE_NAME"" -s ""$i
 
 			for sort in ${SORT_ARRAY[@]}
 			do
 				echo -n $TEST_FILE_NAME,$sort,$i, >> $FILE_LOCATION/$FILE_NAME
-	#			echo -e $sort.jar $SORT_ARGS
+				echo -e $sort.jar $TEST_FILE_NAME -s $i
 				java -jar $sort.jar -f $TEST_FILES_LOCATION/$TEST_FILE_NAME -s $i >> $FILE_LOCATION/$FILE_NAME
 			done
 		done
