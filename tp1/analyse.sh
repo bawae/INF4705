@@ -10,11 +10,12 @@ echo -e "Nom du fichier,bubble,counting,quick,quickMed,quickSeuil,quickMedSeuil"
 
 for f in $TEST_FILES_LOCATION/*
 do
-	echo $f"," >> $FILE_LOCATION/$FILE_NAME
+	echo -n $f >> $FILE_LOCATION/$FILE_NAME
 
 	for ((j=0;j<SORT_ARRAY_ELEMENTS;j++))
 	do
-		java -jar ${SORT_ARRAY[j]}.jar -f $f >> $FILE_LOCATION/$FILE_NAME
+		echo -n "," >> $FILE_LOCATION/$FILE_NAME
+		java -jar ${SORT_ARRAY[j]}.jar -f $f -s 30 >> $FILE_LOCATION/$FILE_NAME
 	done
 
 	echo -e "" >> $FILE_LOCATION/$FILE_NAME
