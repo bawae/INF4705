@@ -14,7 +14,7 @@ do
 	do
 		TEST_FILE_NAME="testset_"$f"_"$j".txt"
 
-		for((i=5; i <= 100; i++))
+		for((i=2; i <= 100; i++))
 		do
 	#		SORT_ARGS="-f ""$TEST_FILES_LOCATION""/""$TEST_FILE_NAME"" -s ""$i
 
