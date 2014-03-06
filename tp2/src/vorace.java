@@ -92,7 +92,7 @@ public class vorace
 			
 			for(int i = 0; i < nombreRestos; i++)
 			{
-				System.out.println(s.nextInt());
+				s.nextInt();
 				values[i][0] = s.nextInt();
 				values[i][1] = s.nextInt();
 				somme += values[i][1];
