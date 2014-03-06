@@ -48,9 +48,11 @@ public class vorace
 		
 		if (printResult)
 		{
+			System.out.println("Voici la solution optimale selon l'algorithme vorace aléatoire:");
+			
 			for (int i = 0; i < result.size(); i++)
 			{
-				System.out.println(Integer.toString(result.get(i)+1));
+				System.out.print(Integer.toString(result.get(i)+1) + "  ");
 			}
 		}
 
