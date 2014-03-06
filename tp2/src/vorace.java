@@ -1,15 +1,14 @@
-package tp2;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
-public class vorace {
+public class vorace
+{
+	private static int somme = 0,
+			capacite = 0;
 	
-
 	public static void main(String[] args)
 	{
 		String path = "";
@@ -37,12 +36,13 @@ public class vorace {
 		
 		// Lecture du fichier et transfer dans un tableau de valeurs
 		int[][] values;
+		
 		values = lireFichier(path);
 		
 		long timeStart = System.nanoTime();
 		
 		// Appel de l'algorithme de tri ? bulle
-		ArrayList<Integer> result = algoVorace(values, somme, values.size() - 1);
+		ArrayList<Integer> result = algoVorace(values);
 		
 		long timeElapsed = Math.abs(timeStart - System.nanoTime());
 		
@@ -50,7 +50,7 @@ public class vorace {
 		{
 			for (int i = 0; i < result.size(); i++)
 			{
-				System.out.println(result.get(i));
+				System.out.println(Integer.toString(result.get(i)+1));
 			}
 		}
 
@@ -69,15 +69,38 @@ public class vorace {
 	 */
 	private static int[][] lireFichier(String path)
 	{
-		ArrayList<Integer> values = new ArrayList<>();
+		int[][] values = null;
 		
 		try
 		{
 			Scanner s = new Scanner(new BufferedReader(new FileReader(path)));
+			int nombreRestos = 0;
+			somme = 0;
 			
-			while (s.hasNext())
+			if(s.hasNext())
 			{
-				
+				nombreRestos = s.nextInt();
+
+			}
+			else
+			{
+				s.close();
+				return null;
+			}
+			
+			values = new int[nombreRestos][2];
+			
+			for(int i = 0; i < nombreRestos; i++)
+			{
+				System.out.println(s.nextInt());
+				values[i][0] = s.nextInt();
+				values[i][1] = s.nextInt();
+				somme += values[i][1];
+			}
+			
+			if(s.hasNext())
+			{
+				capacite = s.nextInt();
 			}
 			
 			s.close();
@@ -94,21 +117,18 @@ public class vorace {
 	// fonction qui execute l'algorithme vorace
 	// On a une tableau 2D avec les donnees receuillies dans les fichiers textes
 	// On demande la somme des revenus
-	public ArrayList<Integer> algoVorace(int[][] donnees, int somme, int capacite)
+	public static ArrayList<Integer> algoVorace(int[][] donnees)
 	{
 		// contient la probabilite pour chaque restaurant
 		double[] proba = new double[donnees.length];
 		// contient les revenus de chaque restaurant possible
 		double[] revenus = new double[donnees.length];
 		
-		for(int i =0; i < donnees.length; i++)
+		for(int i = 0; i < donnees.length; i++)
 		{
-			revenus[i] = donnees[i][0] / donnees[i][1]; 
+			revenus[i] = (double)donnees[i][0] / (double)donnees[i][1]; 
 			proba[i] = revenus[i]/somme;
 		}
-		
-		// On va generer nombre aleatoire pour determiner le restaurant choisit
-		Random rand = new Random(System.currentTimeMillis());
 		
 		// On va garder les differents restaurants dans un tableau qui contiendra la solution de cette iteration
 		ArrayList<Integer> solution = new ArrayList<>();
@@ -121,7 +141,7 @@ public class vorace {
 		int revenusNouvelleSolution = 0;
 		
 		// On fait l'algorithme vorace 10 fois et on garde la meilleure solution (d'ou l'utilisation de deux tableaux de solution qu'on compare)
-		for(int i =0; i < 10; i++)
+		for(int i = 0; i < 10; i++)
 		{
 			// on debute avec la capacite de la ville (cette capacite va diminuer au fur et a mesure qu'on va rajouter un restaurant)
 			int capaciteSolution = capacite;
@@ -137,7 +157,7 @@ public class vorace {
 				boolean solutionAjoutee = false;
 				
 				// en generant le nombre aleatoire on va determiner une probabilite entre 0 et 1 pour trouver quel restaurant ajouter a la solution
-				double fractionRand = (rand.nextInt()%100)/100;
+				double fractionRand = Math.random();
 				
 				// la somme des probabilite nous permet de trouver le ''nombre pige'' dans notre tableau de probabilites
 				double sommeProb = 0;
@@ -146,10 +166,11 @@ public class vorace {
 				for(int j = 0; j < proba.length; j++)
 				{
 					// Si la ville actuelle est celle qui a ete pigee on peut l'ajouter au tableau et sortir de la boucle
-					if(fractionRand < proba[j] + sommeProb && (capaciteSolution - donnees[j][1] >= 0) && (!nouvelleSolution.contains(j)))
+					if(fractionRand < (proba[j] + sommeProb) && (capaciteSolution - donnees[j][1] >= 0) && (!nouvelleSolution.contains(j)))
 					{
 						nouvelleSolution.add(j);
 						capaciteSolution -= donnees[j][1];
+						revenusNouvelleSolution += donnees[i][0];
 						solutionAjoutee = true;
 						break;
 					}
@@ -168,11 +189,12 @@ public class vorace {
 			if(revenusNouvelleSolution > revenusSolution)
 			{
 				revenusSolution = revenusNouvelleSolution;
-				solution = nouvelleSolution;
+				solution.clear();
+				solution.addAll(nouvelleSolution);
 			}
 			
 			// Reinitiliser la nouvelle solution pour la prochaine iteration
-			nouvelleSolution = new ArrayList<>();
+			nouvelleSolution.clear();
 			revenusNouvelleSolution = 0;
 		}
 		
