@@ -48,7 +48,7 @@ public class vorace
 		
 		if (printResult)
 		{
-			System.out.println("Voici la solution optimale selon l'algorithme vorace aléatoire:");
+			System.out.println("Voici la solution optimale selon l'algorithme vorace alï¿½atoire:");
 			
 			for (int i = 0; i < result.size(); i++)
 			{
@@ -97,7 +97,7 @@ public class vorace
 				s.nextInt();
 				values[i][0] = s.nextInt();
 				values[i][1] = s.nextInt();
-				somme += values[i][1];
+				somme += values[i][0]/values[i][1];
 			}
 			
 			if(s.hasNext())
