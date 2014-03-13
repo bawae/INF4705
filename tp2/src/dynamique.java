@@ -121,6 +121,7 @@ public class dynamique {
 	{
 		int[][] solutionArray;
 		ArrayList<Integer> solution = new ArrayList<>();
+		
 		try
 		{
 			solutionArray = new int[nombreRestos][capacite + 1];
@@ -158,19 +159,26 @@ public class dynamique {
 		}
 		
 		// Retracer les emplacements choisis
-		int j = capacite;
+		int c = capacite;
 		int sommeCapacite = 0;
 		for(int i = nombreRestos - 1; i <= 0; ++i)
 		{
-			if(solutionArray[i][j] != solutionArray[i-1][j])
+			if(solutionArray[i][c] != solutionArray[i-1][c])
 			{
 				if(sommeCapacite + donnees[i][1] <= capacite)
 				{
 					sommeCapacite += donnees[i][1];
 					solution.add(i);
-					j -= donnees[i][1];
+					c -= donnees[i][1];
 				}
 			}
+		}
+		
+		for (int i = 0; i < nombreRestos; ++i) {
+			for (int j = 0; j < capacite + 1; ++j) {
+				System.out.print(solutionArray[i][j] + "\t");
+			}
+			System.out.println("");
 		}
 		
 		return solution;
