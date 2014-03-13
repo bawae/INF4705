@@ -53,7 +53,7 @@ public class dynamique {
 			
 			for (int i = 0; i < result.size(); i++)
 			{
-				System.out.print(Integer.toString(result.get(i)+1) + "  ");
+				System.out.print(Integer.toString(result.get(i)) + "  ");
 			}
 		}
 
