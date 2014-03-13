@@ -120,6 +120,7 @@ public class dynamique {
 	public static ArrayList<Integer> algoDynamique(int[][] donnees)
 	{
 		int[][] solutionArray;
+		ArrayList<Integer> solution = new ArrayList<>();
 		try
 		{
 			solutionArray = new int[nombreRestos][capacite + 1];
@@ -157,16 +158,22 @@ public class dynamique {
 		}
 		
 		// Retracer les emplacements choisis
-		for(int i = 0; i < nombreRestos; ++i)
+		int j = capacite;
+		int sommeCapacite = 0;
+		for(int i = nombreRestos - 1; i <= 0; ++i)
 		{
-			for(int j = 0; j < capacite + 1; ++j)
+			if(solutionArray[i][j] != solutionArray[i-1][j])
 			{
-				System.out.print(solutionArray[i][j] + "\t");
+				if(sommeCapacite + donnees[i][1] <= capacite)
+				{
+					sommeCapacite += donnees[i][1];
+					solution.add(i);
+					j -= donnees[i][1];
+				}
 			}
-			System.out.println("");
 		}
 		
-		return null;
+		return solution;
 		
 		
 	}
