@@ -161,14 +161,22 @@ public class dynamique {
 		// Retracer les emplacements choisis
 		int c = capacite;
 		int sommeCapacite = 0;
-		for(int i = nombreRestos - 1; i <= 0; ++i)
+		for(int i = nombreRestos - 1; i >= 0; i--)
 		{
 			if(solutionArray[i][c] != solutionArray[i-1][c])
 			{
-				if(sommeCapacite + donnees[i][1] <= capacite)
+				if(i - 1 < 0)
+				{
+					if(sommeCapacite + donnees[i][1] <= capacite)
+					{
+						solution.add(i+1);
+					}
+					break;
+				}
+				else if(sommeCapacite + donnees[i][1] <= capacite)
 				{
 					sommeCapacite += donnees[i][1];
-					solution.add(i);
+					solution.add(i+1);
 					c -= donnees[i][1];
 				}
 			}
