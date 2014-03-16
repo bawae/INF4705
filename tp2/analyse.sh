@@ -15,7 +15,7 @@ do
 	for ((j=0;j<SORT_ARRAY_ELEMENTS;j++))
 	do
 		echo -n "," >> $FILE_LOCATION/$FILE_NAME
-		java -jar ${SORT_ARRAY[j]}.jar -f $f -s 30 >> $FILE_LOCATION/$FILE_NAME
+		java -jar ${SORT_ARRAY[j]}.jar -f $f >> $FILE_LOCATION/$FILE_NAME
 	done
 
 	echo -e "" >> $FILE_LOCATION/$FILE_NAME

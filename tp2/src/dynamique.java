@@ -65,7 +65,7 @@ public class dynamique {
 			else
 				System.out.print(timeElapsed);
 		}
-		else
+		else if(printResult)
 		{
 			System.out.println("temps dexecution trop long ou manque de memoire");
 		}
