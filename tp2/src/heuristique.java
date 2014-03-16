@@ -9,6 +9,7 @@ public class heuristique {
 
 	private static int capacite = 0,
 			somme = 0;
+	private static long timeStart = 0;
 	
 	public static void main(String[] args)
 	{
@@ -40,7 +41,7 @@ public class heuristique {
 		
 		values = lireFichier(path);
 		
-		long timeStart = System.nanoTime();
+		timeStart = System.nanoTime();
 		
 		// Appel de l'algorithme de tri ? bulle
 		ArrayList<Integer> result = algoHeuristique(values);
@@ -148,6 +149,10 @@ public class heuristique {
 							solutionVorace = solutionTemp;
 							modification = true;
 						}
+					}
+					if(System.nanoTime()-timeStart >= (long)(5*60*10^9))
+					{
+						return solutionVorace;
 					}
 				}
 			}

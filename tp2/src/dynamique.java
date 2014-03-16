@@ -9,6 +9,7 @@ public class dynamique {
 
 	private static int capacite = 0,
 			nombreRestos = 0;
+	private static long timeStart =0;
 	
 	public static void main(String[] args)
 	{
@@ -40,27 +41,35 @@ public class dynamique {
 		
 		values = lireFichier(path);
 		
-		long timeStart = System.nanoTime();
+		timeStart = System.nanoTime();
 		
 		// Appel de l'algorithme de tri ? bulle
 		ArrayList<Integer> result = algoDynamique(values);
 		
-		long timeElapsed = Math.abs(timeStart - System.nanoTime());
-		
-		if (printResult)
+		if(result!=null)
 		{
-			System.out.println("Voici la solution optimale selon l'algorithme d'amelioration locale:");
+			long timeElapsed = Math.abs(timeStart - System.nanoTime());
 			
-			for (int i = 0; i < result.size(); i++)
+			if (printResult)
 			{
-				System.out.print(Integer.toString(result.get(i)) + "  ");
+				System.out.println("Voici la solution optimale selon l'algorithme d'amelioration locale:");
+				
+				for (int i = 0; i < result.size(); i++)
+				{
+					System.out.print(Integer.toString(result.get(i)) + "  ");
+				}
 			}
+	
+			if(printResult)
+				System.out.println("\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
+			else
+				System.out.print(timeElapsed);
 		}
-
-		if(printResult)
-			System.out.println("\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
 		else
-			System.out.print(timeElapsed);
+		{
+			System.out.println("temps dexecution trop long ou manque de memoire");
+		}
+			
 	}
 	
 	
@@ -154,6 +163,10 @@ public class dynamique {
 				else
 				{
 					solutionArray[i][j] = Math.max(donnees[i][0] + solutionArray[i-1][j-donnees[i][1]],solutionArray[i-1][j]);
+				}
+				if(System.nanoTime()-timeStart >= (long)(5*60*10^9))
+				{
+					return null;
 				}
 			}
 		}

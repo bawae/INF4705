@@ -8,6 +8,7 @@ public class vorace
 {
 	public static int somme = 0,
 			capacite = 0;
+	private static long timeStart =0;
 	
 	public static void main(String[] args)
 	{
@@ -39,7 +40,7 @@ public class vorace
 		
 		values = lireFichier(path);
 		
-		long timeStart = System.nanoTime();
+		timeStart = System.nanoTime();
 		
 		// Appel de l'algorithme de tri ? bulle
 		ArrayList<Integer> result = algoVorace(values);
@@ -184,7 +185,11 @@ public class vorace
 				if(!solutionAjoutee)
 				{
 					check++;
-				}				
+				}		
+				if(System.nanoTime()-timeStart >= (long)(5*60*10^9))
+				{
+					return solution;
+				}
 			}
 			
 			// On determine quelle solution on garde
@@ -198,6 +203,8 @@ public class vorace
 			// Reinitiliser la nouvelle solution pour la prochaine iteration
 			nouvelleSolution.clear();
 			revenusNouvelleSolution = 0;
+			
+			
 		}
 		
 		return solution;
