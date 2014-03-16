@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class vorace
 {
-	private static int somme = 0,
+	public static int somme = 0,
 			capacite = 0;
 	
 	public static void main(String[] args)

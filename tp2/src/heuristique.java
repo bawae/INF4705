@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class dynamique {
+public class heuristique {
 
 	private static int capacite = 0,
-			nombreRestos = 0;
+			somme = 0;
 	
 	public static void main(String[] args)
 	{
@@ -43,17 +43,17 @@ public class dynamique {
 		long timeStart = System.nanoTime();
 		
 		// Appel de l'algorithme de tri ? bulle
-		ArrayList<Integer> result = algoDynamique(values);
+		ArrayList<Integer> result = algoHeuristique(values);
 		
 		long timeElapsed = Math.abs(timeStart - System.nanoTime());
 		
 		if (printResult)
 		{
-			System.out.println("Voici la solution optimale selon l'algorithme d'amelioration locale:");
+			System.out.println("Voici la solution optimale selon l'algorithme damelioration locale:");
 			
 			for (int i = 0; i < result.size(); i++)
 			{
-				System.out.print(Integer.toString(result.get(i)) + "  ");
+				System.out.print(Integer.toString(result.get(i)+1) + "  ");
 			}
 		}
 
@@ -77,6 +77,8 @@ public class dynamique {
 		try
 		{
 			Scanner s = new Scanner(new BufferedReader(new FileReader(path)));
+			int nombreRestos = 0;
+			somme = 0;
 			
 			if(s.hasNext())
 			{
@@ -96,6 +98,7 @@ public class dynamique {
 				s.nextInt();
 				values[i][0] = s.nextInt();
 				values[i][1] = s.nextInt();
+				somme += values[i][0]/values[i][1];
 			}
 			
 			if(s.hasNext())
@@ -114,84 +117,65 @@ public class dynamique {
 		return values;
 	}
 	
-	// fonction qui execute l'algorithme de programmation dynamique
+	// fonction qui execute l'algorithme vorace
 	// On a une tableau 2D avec les donnees receuillies dans les fichiers textes
 	// On demande la somme des revenus
-	public static ArrayList<Integer> algoDynamique(int[][] donnees)
+	public static ArrayList<Integer> algoHeuristique(int[][] donnees)
 	{
-		int[][] solutionArray;
-		ArrayList<Integer> solution = new ArrayList<>();
+		// On part de la solution trouvee avec l'algorithme vorace
+		vorace.somme = somme;
+		vorace.capacite = capacite;
 		
-		try
-		{
-			solutionArray = new int[nombreRestos][capacite + 1];
+		ArrayList<Integer> solutionVorace = vorace.algoVorace(donnees);
 		
-		}
-		catch(OutOfMemoryError e)
+		boolean modification = false;
+		do
 		{
-			return null;
-		}
-		
-		for(int i = 0; i < nombreRestos; i++)
-		{
-			for(int j = 0; j < capacite + 1; j++)
+			modification = false;
+			for(int i = 0; i < solutionVorace.size(); i++)
 			{
-				solutionArray[i][j] = 0;
-				
-				if(i - 1 < 0)
+				for(int j = 0; j < donnees.length; j++)
 				{
-					// Lorsqu'on rempli la premiere ligne, on ne peut pas comparer aux lignes precedentes donc on 
-					// fait juste verifier si le poid le l'item i est plus petit que la capacite j.
-					if(donnees[i][1] <= j)
+					if(!solutionVorace.contains(j))
 					{
-						solutionArray[i][j] = donnees[i][0];
+						ArrayList<Integer> solutionTemp = new ArrayList<>(solutionVorace);
+						solutionTemp.remove(solutionVorace.get(i));
+						solutionTemp.add(i,j);
+						int capaciteTemp = calculerCapacite(solutionTemp, donnees);
+						
+						if(capaciteTemp <= capacite && calculerRevenu(solutionTemp,donnees) > calculerRevenu(solutionVorace, donnees))
+						{
+							solutionVorace = solutionTemp;
+							modification = true;
+						}
 					}
 				}
-				else if(j - donnees[i][1] < 0)
-				{
-					solutionArray[i][j] = solutionArray[i-1][j];
-				}
-				else
-				{
-					solutionArray[i][j] = Math.max(donnees[i][0] + solutionArray[i-1][j-donnees[i][1]],solutionArray[i-1][j]);
-				}
 			}
 		}
-		
-		// Retracer les emplacements choisis
-		int c = capacite;
-		int sommeCapacite = 0;
-		for(int i = nombreRestos - 1; i >= 0; i--)
-		{
-			if(i - 1 < 0)
-			{
-				if(sommeCapacite + donnees[i][1] <= capacite)
-				{
-					solution.add(i+1);
-				}
-				break;
-			}
-			else if(solutionArray[i][c] != solutionArray[i-1][c])
-			{
-				
-				if(sommeCapacite + donnees[i][1] <= capacite)
-				{
-					sommeCapacite += donnees[i][1];
-					solution.add(i+1);
-					c -= donnees[i][1];
-				}
-			}
-		}
-		
-		for (int i = 0; i < nombreRestos; ++i) {
-			for (int j = 0; j < capacite + 1; ++j) {
-				System.out.print(solutionArray[i][j] + "\t");
-			}
-			System.out.println("");
-		}
-		
-		return solution;
+		while(modification);
 		
 		
+		return solutionVorace;		
 	}
+	
+	private static int calculerRevenu(ArrayList<Integer> solution, int[][] donnees)
+	{
+		int revenu = 0;
+		for(int i = 0; i < solution.size(); i++)
+		{
+			revenu += donnees[solution.get(i)][0];
+		}
+		return revenu;
+	}
+	
+	private static int calculerCapacite(ArrayList<Integer> solution, int[][] donnees)
+	{
+		int cap = 0;
+		for(int i = 0; i < solution.size(); i++)
+		{
+			cap += donnees[solution.get(i)][1];
+		}
+		return cap;
+	}
+	
 }
