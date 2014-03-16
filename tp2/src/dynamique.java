@@ -9,7 +9,7 @@ public class dynamique {
 
 	private static int capacite = 0,
 			nombreRestos = 0;
-	private static long timeStart =0;
+	private static long timeStart = 0;
 	
 	public static void main(String[] args)
 	{
@@ -65,7 +65,7 @@ public class dynamique {
 			else
 				System.out.print(timeElapsed);
 		}
-		else if(printResult)
+		else if(result == null && printResult)
 		{
 			System.out.println("temps dexecution trop long ou manque de memoire");
 		}
@@ -134,7 +134,6 @@ public class dynamique {
 		try
 		{
 			solutionArray = new int[nombreRestos][capacite + 1];
-		
 		}
 		catch(OutOfMemoryError e)
 		{
@@ -164,7 +163,7 @@ public class dynamique {
 				{
 					solutionArray[i][j] = Math.max(donnees[i][0] + solutionArray[i-1][j-donnees[i][1]],solutionArray[i-1][j]);
 				}
-				if(System.nanoTime()-timeStart >= (long)(5*60*10^9))
+				if(System.nanoTime()-timeStart >= (long)(5*60*Math.pow(10, 9)))
 				{
 					return null;
 				}
@@ -195,16 +194,14 @@ public class dynamique {
 				}
 			}
 		}
-		
-		for (int i = 0; i < nombreRestos; ++i) {
-			for (int j = 0; j < capacite + 1; ++j) {
-				System.out.print(solutionArray[i][j] + "\t");
-			}
-			System.out.println("");
-		}
+//		
+//		for (int i = 0; i < nombreRestos; ++i) {
+//			for (int j = 0; j < capacite + 1; ++j) {
+//				System.out.print(solutionArray[i][j] + "\t");
+//			}
+//			System.out.println("");
+//		}
 		
 		return solution;
-		
-		
 	}
 }

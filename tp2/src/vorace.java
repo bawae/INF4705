@@ -186,7 +186,7 @@ public class vorace
 				{
 					check++;
 				}		
-				if(System.nanoTime()-timeStart >= (long)(5*60*10^9))
+				if(System.nanoTime()-timeStart >= (long)(5*60*Math.pow(10,9)))
 				{
 					return solution;
 				}
