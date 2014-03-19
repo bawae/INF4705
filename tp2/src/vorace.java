@@ -8,7 +8,7 @@ public class vorace
 {
 	public static int somme = 0,
 			capacite = 0;
-	private static long timeStart =0;
+	public static long timeStart = 0;
 	
 	public static void main(String[] args)
 	{

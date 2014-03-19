@@ -63,7 +63,7 @@ public class dynamique {
 			int revenuTotal = 0;
 			for (int i = 0; i < result.size(); i++)
 			{
-				revenuTotal += values[result.get(i)][0];
+				revenuTotal += values[result.get(i)-1][0];
 			}
 	
 			if(printResult)

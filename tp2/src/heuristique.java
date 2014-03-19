@@ -58,11 +58,7 @@ public class heuristique {
 			}
 		}
 		
-		int revenuTotal = 0;
-		for (int i = 0; i < result.size(); i++)
-		{
-			revenuTotal += values[result.get(i)][0];
-		}
+		int revenuTotal = calculerRevenu(result, values);
 
 		if(printResult)
 			System.out.println("\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
@@ -132,7 +128,7 @@ public class heuristique {
 		// On part de la solution trouvee avec l'algorithme vorace
 		vorace.somme = somme;
 		vorace.capacite = capacite;
-		
+		vorace.timeStart = System.nanoTime();
 		ArrayList<Integer> solutionVorace = vorace.algoVorace(donnees);
 		
 		boolean modification = false;
@@ -164,7 +160,6 @@ public class heuristique {
 			}
 		}
 		while(modification);
-		
 		
 		return solutionVorace;		
 	}

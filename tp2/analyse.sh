@@ -6,7 +6,7 @@ TEST_FILES_LOCATION='Restos'
 SORT_ARRAY=( vorace dynamique local )
 SORT_ARRAY_ELEMENTS=${#SORT_ARRAY[@]}
 
-echo -e "Nom du fichier,vorace,dynamique,local" > $FILE_LOCATION/$FILE_NAME
+echo -e "Nom du fichier,vorace,revenuVorace,dynamique,revenuDynamique,local,revenuLocal" > $FILE_LOCATION/$FILE_NAME
 
 for f in $TEST_FILES_LOCATION/*
 do
