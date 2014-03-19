@@ -57,11 +57,17 @@ public class heuristique {
 				System.out.print(Integer.toString(result.get(i)+1) + "  ");
 			}
 		}
+		
+		int revenuTotal = 0;
+		for (int i = 0; i < result.size(); i++)
+		{
+			revenuTotal += values[result.get(i)][0];
+		}
 
 		if(printResult)
 			System.out.println("\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
 		else
-			System.out.print(timeElapsed);
+			System.out.print(timeElapsed + "," + revenuTotal);
 	}
 	
 	
