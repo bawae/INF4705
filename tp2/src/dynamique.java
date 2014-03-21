@@ -65,11 +65,14 @@ public class dynamique {
 			{
 				revenuTotal += values[result.get(i)-1][0];
 			}
-	
+
 			if(printResult)
+			{
+				System.out.println("\nRevenu total: " + revenuTotal);
 				System.out.println("\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
+			}
 			else
-				System.out.print(timeElapsed + "," + revenuTotal);
+				System.out.println(timeElapsed);
 		}
 		else if(result == null && printResult)
 		{

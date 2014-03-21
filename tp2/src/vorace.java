@@ -64,9 +64,12 @@ public class vorace
 		}
 
 		if(printResult)
+		{
+			System.out.print("\nRevenu total: " + revenuTotal);
 			System.out.println("\nTemps d'execution total de l'algorithme: " + timeElapsed + " ns");
+		}
 		else
-			System.out.print(timeElapsed + "," + revenuTotal);
+			System.out.println(timeElapsed);
 	}
 	
 	
