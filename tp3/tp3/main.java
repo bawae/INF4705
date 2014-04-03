@@ -6,10 +6,16 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.jgrapht.UndirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
+
 public class main
 {
-	public static int nbAretes = 0,
+	private static int nbAretes = 0,
 			nbSommets = 0;
+
+    private static UndirectedGraph<Integer, Integer> u = new SimpleGraph<Integer, Integer>(Integer.class);
 	
 	public static void main(String[] args)
 	{
@@ -31,10 +37,10 @@ public class main
 		}
 		
 		// Lecture du fichier et transfer dans un tableau de valeurs
-		int[][] values = lireFichier(path);
+		lireFichier(path);
 		
 		// Appel de l'algorithme de tri ? bulle
-		ArrayList<Integer> result = null; //= algoVorace(values);
+		ArrayList<Integer> result = optimisationRouteurs(u);
 		
 		for (int i = 0; i < result.size(); i++)
 		{
@@ -49,10 +55,8 @@ public class main
 	 * @param path where the file exists
 	 * @return ArrayList containing all the values in the order read
 	 */
-	private static int[][] lireFichier(String path)
+	private static void lireFichier(String path)
 	{
-		int[][] values = null;
-		
 		try
 		{
 			Scanner s = new Scanner(new BufferedReader(new FileReader(path)));
@@ -66,16 +70,18 @@ public class main
 			else
 			{
 				s.close();
-				return null;
+				return;
 			}
 			
-			values = new int[nbAretes][2];
+			for(int i = 1; i <= nbSommets; i++)
+			{
+				u.addVertex(i);
+			}
 			
 			for(int i = 0; i < nbAretes; i++)
 			{
 				s.nextInt();
-				values[i][0] = s.nextInt();
-				values[i][1] = s.nextInt();
+				u.addEdge(s.nextInt(), s.nextInt());
 			}
 			
 			s.close();
@@ -85,15 +91,12 @@ public class main
 			System.out.println("Le fichier n'a pas ete trouve!");
 			System.exit(0);
 		}
-		
-		return values;
 	}
 	
-	private static ArrayList<Integer> optimisationRouteurs(int[][] values)
+	private static ArrayList<Integer> optimisationRouteurs(UndirectedGraph<Integer, Integer> graph)
 	{
-		
-		
-		
+        
+        
 		// todo changer le return
 		return null;
 	}

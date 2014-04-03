@@ -133,7 +133,7 @@ public class heuristique {
 		vorace.capacite = capacite;
 		vorace.timeStart = System.nanoTime();
 		ArrayList<Integer> solutionVorace = vorace.algoVorace(donnees);
-		
+		SimpleGraph sg = new SimpleGraph();
 		boolean modification = false;
 		do
 		{
