@@ -1,7 +1,10 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -43,13 +46,26 @@ public class AlgorithmeOptimisation
 		lireFichier(path);
 		
 		// Appel de l'algorithme de tri ? bulle
+		long tempsDebut = System.nanoTime();
 		ArrayList<Noeud> result = optimisationRouteurs();
+		double tempsTotal = (double)(System.nanoTime() - tempsDebut)/1000000000.0;
+		
+		System.out.println(result.size() + " " + new DecimalFormat("#.##########").format(tempsTotal));
+		
+		Collections.sort(result, new Comparator<Noeud>() {
+	        @Override
+	        public int compare(Noeud noeud1, Noeud noeud2)
+	        {
+	            return  noeud1.numeroNoeud.compareTo(noeud2.numeroNoeud);
+	        }
+	    });
 		
 		for (int i = 0; i < result.size(); i++)
 		{
 			System.out.println(Integer.toString(result.get(i).numeroNoeud));
 		}
 	}
+	
 	
 	
 	/**

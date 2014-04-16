@@ -1,6 +1,6 @@
 public class Noeud
 {
-	public int numeroNoeud;
+	public Integer numeroNoeud;
 	public enum Couleur{BLANC, GRIS, NOIR};
 	public Couleur couleur;
 	public int compteurRouteur;
