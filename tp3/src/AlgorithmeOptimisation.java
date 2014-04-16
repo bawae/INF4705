@@ -1,5 +1,3 @@
-package tp3;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,17 +8,18 @@ import java.util.Scanner;
 import java.util.Stack;
 
 import org.jgrapht.UndirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import tp3.Noeud.Couleur;
-
-public class main
+public class AlgorithmeOptimisation
 {
 	private static int nbAretes = 0,
 			nbSommets = 0;
 
-    private static UndirectedGraph<Noeud, Integer> u = new SimpleGraph<Noeud, Integer>(Integer.class);
+    private static UndirectedGraph<Noeud, DefaultEdge> graph = new SimpleGraph<Noeud, DefaultEdge>(DefaultEdge.class);
 	
+    private static Noeud[] tabNoeuds;
+    
 	public static void main(String[] args)
 	{
 		String path = "";
@@ -44,7 +43,7 @@ public class main
 		lireFichier(path);
 		
 		// Appel de l'algorithme de tri ? bulle
-		ArrayList<Noeud> result = optimisationRouteurs(u);
+		ArrayList<Noeud> result = optimisationRouteurs();
 		
 		for (int i = 0; i < result.size(); i++)
 		{
@@ -76,18 +75,19 @@ public class main
 				return;
 			}
 
-			Noeud[] tabNoeuds = new Noeud[nbSommets];
+			tabNoeuds = new Noeud[nbSommets];
 			
 			for(int i = 1; i <= nbSommets; i++)
 			{
-				tabNoeuds[i-1] = new Noeud(i, Couleur.BLANC, 0); 
-				u.addVertex(tabNoeuds[i-1]);
+				tabNoeuds[i-1] = new Noeud(i, Noeud.Couleur.BLANC, 0, false); 
+				graph.addVertex(tabNoeuds[i-1]);
 			}
 			
 			for(int i = 0; i < nbAretes; i++)
 			{
-				s.nextInt();
-				u.addEdge(tabNoeuds[s.nextInt()-1], tabNoeuds[s.nextInt()-1]);
+				Noeud source = tabNoeuds[s.nextInt()-1];
+				Noeud destination = tabNoeuds[s.nextInt()-1];
+				graph.addEdge(source, destination);
 			}
 			
 			s.close();
@@ -99,10 +99,10 @@ public class main
 		}
 	}
 	
-	private static ArrayList<Noeud> optimisationRouteurs(UndirectedGraph<Noeud, Integer> graph)
+	private static ArrayList<Noeud> optimisationRouteurs()
 	{
 		Queue<Noeud> fileFEL = new LinkedList<Noeud>();
-		Noeud noeudDepart = new Noeud();
+		Noeud noeudDepart = tabNoeuds[0];
 		Stack<Noeud> pileColore = new Stack<Noeud>();
 		ArrayList<Noeud> listeRouteurs = new ArrayList<Noeud>();
 		
@@ -120,9 +120,10 @@ public class main
 		while(!fileFEL.isEmpty())
 		{
 			noeudCourant = fileFEL.poll();
+			noeudCourant.visite = true;
 			boolean besoinRouteur = false;
 			
-			for(Integer i : graph.edgesOf(noeudCourant))
+			for(DefaultEdge i : graph.edgesOf(noeudCourant))
 			{
 				Noeud voisin = graph.getEdgeSource(i); 
 				if(voisin == noeudCourant)
@@ -130,7 +131,7 @@ public class main
 					voisin = graph.getEdgeTarget(i);
 				}
 				
-				if(voisin.couleur == Couleur.BLANC)
+				if(voisin.couleur == Noeud.Couleur.BLANC)
 				{
 					besoinRouteur = true;
 					break;
@@ -139,12 +140,13 @@ public class main
 			
 			if(besoinRouteur)
 			{
-				noeudCourant.couleur = Couleur.NOIR;
+				noeudCourant.couleur = Noeud.Couleur.NOIR;
 				noeudCourant.compteurRouteur++;
 				
-				pileColore.push(noeudCourant);
+				if(!pileColore.contains(noeudCourant))
+					pileColore.push(noeudCourant);
 				
-				for(Integer i : graph.edgesOf(noeudCourant))
+				for(DefaultEdge i : graph.edgesOf(noeudCourant))
 				{
 					Noeud voisin = graph.getEdgeSource(i); 
 					if(voisin == noeudCourant)
@@ -152,27 +154,32 @@ public class main
 						voisin = graph.getEdgeTarget(i);
 					}
 					
-					if(voisin.couleur == Couleur.BLANC)
+					if(voisin.couleur == Noeud.Couleur.BLANC)
 					{
-						voisin.couleur = Couleur.GRIS;
+						voisin.couleur = Noeud.Couleur.GRIS;
+						
+						if(!pileColore.contains(noeudCourant))
+							pileColore.push(voisin);
 					}
 					
 					voisin.compteurRouteur++;
-					pileColore.push(voisin);
-					fileFEL.offer(voisin);
+					
+					if(!voisin.visite)
+						fileFEL.offer(voisin);
 				}
 			}
 			else
 			{
-				for(Integer i : graph.edgesOf(noeudCourant))
+				for(DefaultEdge i : graph.edgesOf(noeudCourant))
 				{
 					Noeud voisin = graph.getEdgeSource(i); 
 					if(voisin == noeudCourant)
 					{
 						voisin = graph.getEdgeTarget(i);
 					}
-					
-					fileFEL.offer(voisin);
+
+					if(!voisin.visite)
+						fileFEL.offer(voisin);
 				}
 			}
 		}
@@ -182,9 +189,9 @@ public class main
 			noeudCourant = pileColore.pop();
 			boolean peutEnleverRouteur = true;
 			
-			if(noeudCourant.couleur == Couleur.NOIR)
+			if(noeudCourant.couleur == Noeud.Couleur.NOIR)
 			{
-				for(Integer i : graph.edgesOf(noeudCourant))
+				for(DefaultEdge i : graph.edgesOf(noeudCourant))
 				{
 					Noeud voisin = graph.getEdgeSource(i); 
 					if(voisin == noeudCourant)
@@ -202,10 +209,10 @@ public class main
 			
 			if(peutEnleverRouteur)
 			{
-				noeudCourant.couleur = Couleur.GRIS;
+				noeudCourant.couleur = Noeud.Couleur.GRIS;
 				noeudCourant.compteurRouteur--;
 				
-				for(Integer i : graph.edgesOf(noeudCourant))
+				for(DefaultEdge i : graph.edgesOf(noeudCourant))
 				{
 					Noeud voisin = graph.getEdgeSource(i); 
 					if(voisin == noeudCourant)

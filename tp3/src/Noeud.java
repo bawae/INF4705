@@ -1,17 +1,17 @@
-package tp3;
-
 public class Noeud
 {
 	public int numeroNoeud;
 	public enum Couleur{BLANC, GRIS, NOIR};
 	public Couleur couleur;
 	public int compteurRouteur;
+	public boolean visite;
 	
-	public Noeud(int numeroNoeud, Couleur couleur, int compteurRouteur)
+	public Noeud(int numeroNoeud, Couleur couleur, int compteurRouteur, boolean visite)
 	{
 		this.numeroNoeud = numeroNoeud;
 		this.couleur = couleur;
 		this.compteurRouteur = compteurRouteur;
+		this.visite = visite;
 	}
 	
 	public Noeud()
@@ -19,5 +19,6 @@ public class Noeud
 		numeroNoeud = 0;
 		couleur = Couleur.BLANC;
 		compteurRouteur = 0;
+		visite = false;
 	}
 }
